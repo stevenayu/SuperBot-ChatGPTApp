@@ -14,6 +14,7 @@ export function removeServerToken() {
     return uni.removeStorageSync(serverKey)
 }
 export function setToken(data) {
+	console.log("保存 token：", data)
     uni.setStorageSync(tokenKey, data)
 }
 

@@ -218,7 +218,9 @@ export default {
             if (getToken() !== "") {
                 try {
                     this.user = await userInfo();
+					console.log('userinfo: ', this.user)
                 } catch (e) {
+					console.log('获取用户数据失败')
                     uni.showToast({
                         icon: 'none',
                         duration: 1000,
@@ -254,28 +256,37 @@ export default {
                     try {
                         let token = await weChatLogin({
                             code: res.code
-                        });
+                        });						
                         setToken(token)
                         await that.userInfo();
                         setTimeout(function () {
+							console.log("登录成功")
                             that.isLogin = true
                             uni.hideLoading()
-                        }, 1000);
+                        }, 5000);
+						
                     } catch (e) {
                         uni.hideLoading()
+						console.log("登录失败：", e)
                         uni.showToast({
                             icon: 'none',
                             duration: 1000,
                             title: e
                         });
-                    }
-
-                }
-            })
-
-
-        }
-    }
+					}
+                },
+				fail(res) {
+					// uni.login() 方法调用失败时的处理
+					console.log("微信登录失败：", res)
+					uni.showToast({
+						icon: 'none',
+						duration: 1000,
+						title: "微信登录失败，请重试"
+					});
+				}
+			})
+		}
+	}
 }
 </script>
 

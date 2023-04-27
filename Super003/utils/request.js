@@ -9,6 +9,8 @@ function service(options = {}) {
             'content-type': 'application/json',
             'token': `${getToken()}`
         };
+		console.log('发送请求，Token：', `${getToken()}`);
+
     }
     return new Promise((resolve, reject) => {
         // 发送 HTTP 请求
@@ -18,6 +20,7 @@ function service(options = {}) {
                 if (res.statusCode === 200) {
                     if (res.data.code === 200) {
                         resolve(res.data.data);
+						console.log('请求结果：', res.data.data);
                     }else{
                         if (res.data.code===401){
                             removeToken()
